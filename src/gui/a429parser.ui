@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>A429Parser</class>
+ <widget class="QWidget" name="A429Parser">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>472</width>
+    <height>667</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>A429 Parser</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/images/paper-airplane-icon.png</normaloff>:/images/paper-airplane-icon.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QTableView QHeaderView::section
+{
+	border-style: none;
+    border-left: 0px solid #d8d8d8;
+    border-top: 0px solid #d8d8d8;
+    border-right: 1px solid #d8d8d8;
+    border-bottom: 1px solid #d8d8d8;
+ }
+
+QTableView QTableCornerButton:section
+{
+    border-left: 0px solid #d8d8d8;
+    border-top: 0px solid #d8d8d8;
+    border-right: 1px solid #d8d8d8;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+QTabWidget::pane {
+  border-left: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+  border-right: 0px solid lightgray;
+  border-bottom: 0px solid lightgray;
+  top:-1px; 
+  background: rgb(245, 245, 245);
+} 
+
+QTabBar::tab {
+  background: rgb(230, 230, 230); 
+  border-left: 1px solid lightgray; 
+  border-right: 0px solid lightgray; 
+  border-top: 1px solid lightgray; 
+  border-bottom: 1px solid lightgray; 
+  padding: 3px;
+  padding-left: 9px;
+  padding-right: 9px;
+} 
+
+QTabBar::tab:last {
+  background: rgb(230, 230, 230); 
+  border-left: 1px solid lightgray; 
+  border-right: 1px solid lightgray; 
+  border-top: 1px solid lightgray; 
+  border-bottom: 1px solid lightgray; 
+  padding: 3px;
+  padding-left: 9px;
+  padding-right: 9px;
+} 
+
+QTabBar::tab:selected { 
+  background: rgb(245, 245, 245); 
+  margin-bottom: -1px; 
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="QWidget" name="tabA4292Value">
+      <attribute name="title">
+       <string>A429-&gt;Value</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayoutA4292Value">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabValue2A429">
+      <attribute name="title">
+       <string>Value-&gt;A429</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayoutValue2A429">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabA4292ValueBatch">
+      <attribute name="title">
+       <string>A429-&gt;Value(Batch)</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayoutA4292ValueBatch">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
