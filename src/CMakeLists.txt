@@ -3,9 +3,11 @@
 #
 cmake_minimum_required (VERSION 3.10...3.18)
 
-#set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY)
-set(QT_DIR "/Users/songbinbin/Documents/Library/Qt/6.1.0/clang_64")
+#set QT_DIR for your environment
+if(APPLE)
+set(QT_DIR "~/Documents/Library/Qt/6.1.0/clang_64")
 set(CMAKE_PREFIX_PATH "${QT_DIR}\\lib\\cmake")
+endif(APPLE)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -77,7 +79,7 @@ target_link_libraries(A429Parser PRIVATE
     Qt6::PrintSupport
 )
 
-# Copy after build finished 
+# Copy after build finished on Windows
 if(WIN32)
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
         add_custom_command(TARGET A429Parser POST_BUILD

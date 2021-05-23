@@ -7,7 +7,8 @@
 int main(int argc, char* argv[])
 {
    QApplication a(argc, argv);
-   qApp->setStyle(QStyleFactory::create("Fusion"));
+
+   a.setStyle(QStyleFactory::create("Fusion"));
    A429Parser parser;
    parser.show();
 
