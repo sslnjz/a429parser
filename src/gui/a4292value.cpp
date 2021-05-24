@@ -29,15 +29,28 @@ public:
       return dword;
    }
 
-   QHash<double, QString> codesplit(const QString& codedesc)
+   QHash<uint32_t, QString> codesplit(const QString& codedesc)
    {
-      QHash<double, QString> codemap;
+      QHash<uint32_t, QString> codemap;
       QStringList codes = codedesc.split(";", Qt::SkipEmptyParts);
       for (auto code : codes)
       {
          QStringList c = code.split("=", Qt::SkipEmptyParts);
          if (c.size() == 2)
-            codemap[c[0].toDouble()] = c[1];
+         {
+            bool Ok = false;
+            QString identify = c[0];
+            uint32_t icode = identify.toInt(&Ok, 2); 
+            if (Ok)
+            {
+               codemap[icode] = c[1];
+            }
+            else
+            {
+               icode = identify.toInt(&Ok, 10);
+               codemap[icode] = c[1];
+            }
+         }
       }
 
       return codemap;
@@ -45,7 +58,7 @@ public:
 
    QString code(const QString& codedesc, double value)
    {
-      QHash<double, QString> codehash = codesplit(codedesc);
+      QHash<uint32_t, QString> codehash = codesplit(codedesc);
       if (codehash.find(value) != codehash.end())
       {
          return QString("%1(%2)").arg(value).arg(codehash[value]);

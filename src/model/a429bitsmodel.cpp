@@ -10,7 +10,7 @@ class A429BitsModelPrivate : public QObject
 public:
    A429BitsModelPrivate(A429BitsModel* q) : q_ptr(q)
    {
-      horizontalHeaders << tr("LSB") << tr("SIG Bits") << tr("LSB Res") << tr("Format") << tr("Coded");
+      horizontalHeaders << tr("LSB") << tr("Bits Number") << tr("LSB Res") << tr("Format") << tr("Encode");
    }
 
 public:
@@ -98,7 +98,18 @@ QVariant A429BitsModel::data(const QModelIndex& index, int role) const
       }
       break;
    case Qt::TextAlignmentRole:
-      return QVariant(Qt::AlignCenter);
+      switch (index.column())
+      {
+      case 4:
+      {
+         if(d_ptr->data[index.row()].format == "BNR")
+            return QVariant(Qt::AlignCenter);
+         else
+            return QVariant(Qt::AlignVCenter | Qt::AlignLeft);
+      }
+      default:
+         return QVariant(Qt::AlignCenter);
+      }
    default:
       break;
    }
@@ -172,6 +183,10 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
                   d->data[index.row()].sigbits = 1;
                   d->data[index.row()].lsbres = 1;
                }
+               else if (value.toString() == "BNR")
+               {
+                  d->data[index.row()].codedesc = "--none--";
+               }
             }
             break;
          case 4:
@@ -188,7 +203,27 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
 
 Qt::ItemFlags A429BitsModel::flags(const QModelIndex& index) const
 {
-   return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+   EFormat format;
+   switch (format.index(d_ptr->data[index.row()].format))
+   {
+   case EFormat::DIS:
+   case EFormat::BCD:
+   case EFormat::CHR:
+   case EFormat::COD:
+      return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+   case EFormat::BNR:
+      {
+         switch (index.column())
+         {
+         case 4:
+            return QAbstractTableModel::flags(index);
+         default:
+            return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+         }
+      }
+   default:
+      return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+   }
 }
 
 void A429BitsModel::clear()

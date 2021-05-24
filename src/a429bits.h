@@ -53,7 +53,7 @@ private:
 struct A429Bits
 {
    int         lsb;        //least significant bit
-   int         sigbits;    //significant bits numbert
+   int         sigbits;    //significant bits number
    double      lsbres;     //least significant bit resolution
    std::string format;     //significant bits format
    std::string codedesc;   //significant bit encode
