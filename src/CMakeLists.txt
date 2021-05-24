@@ -5,9 +5,12 @@ cmake_minimum_required (VERSION 3.10...3.18)
 
 #set QT_DIR for your environment
 if(APPLE)
-set(QT_DIR "~/Documents/Library/Qt/6.1.0/clang_64")
-set(CMAKE_PREFIX_PATH "${QT_DIR}\\lib\\cmake")
-endif(APPLE)
+    set(QT_DIR "~/Documents/Library/Qt/6.1.0/clang_64")
+    set(CMAKE_PREFIX_PATH "${QT_DIR}\\lib\\cmake")
+elseif(WIN32)
+    set(QT_DIR "D:\\Tools\\Qt\\6.1.0\\msvc2019_64")
+    set(CMAKE_PREFIX_PATH "${QT_DIR}\\lib\\cmake")
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -45,8 +48,12 @@ set(A429PARSER_SRCS
     "gui/a4292valuebatch.cpp"
     "view/a429bitsview.h" 
     "view/a429bitsview.cpp"
+    "view/a429bitsparseview.h"
+    "view/a429bitsparseview.cpp"
     "model/a429bitsmodel.h"
     "model/a429bitsmodel.cpp" 
+    "model/a429bitsparsemodel.h"
+    "model/a429bitsparsemodel.cpp"
     "delegate/aligndelegate.h"
     "delegate/aligndelegate.cpp"
     "delegate/a429bitsdelegate.cpp" 
@@ -55,21 +62,18 @@ set(A429PARSER_SRCS
     "a429parser.qrc"
     "a429bits.h"
     "utils.h"
-    "main.cpp"
-)
+    "main.cpp"  )
 
-# Set some Win32 Specific Settings
+# Set some syetem Specific Settings
 if(WIN32)
     add_executable (A429Parser WIN32 ${A429PARSER_SRCS})
-endif(WIN32)
-# Set some Apple MacOS Specific settings
-if (APPLE)
+elseif (APPLE)
     set(MACOSX_BUNDLE_ICON_FILE "a429parser.icns")
     set(APP_ICON_MACOSX ${CMAKE_CURRENT_SOURCE_DIR}/images/a429parser.icns)
     set_source_files_properties(${APP_ICON_MACOSX}
             PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     add_executable (A429Parser MACOSX_BUNDLE ${APP_ICON_MACOSX} ${A429PARSER_SRCS})
-endif (APPLE)
+endif ()
 
 # Add source to this project's executable.
 target_link_libraries(A429Parser PRIVATE 

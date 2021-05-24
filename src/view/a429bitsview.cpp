@@ -12,6 +12,7 @@ A429BitsView::A429BitsView(QWidget* parent)
 {
    setModel(m_model);
    setItemDelegate(new A429BitsDelegate(this));
+   resizeRowsToContents();
 }
 
 A429BitsView::~A429BitsView()

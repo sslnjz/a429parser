@@ -183,7 +183,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Labe:l</string>
+         <string>Label:</string>
         </property>
        </widget>
       </item>
@@ -243,7 +243,20 @@
        </widget>
       </item>
       <item row="2" column="0" colspan="4">
-       <widget class="QTableWidget" name="tableWidgetA429Value"/>
+       <widget class="A429BitsParseView" name="tableWidgetA429Value">
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>50</number>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderMinimumSectionSize">
+         <number>23</number>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>23</number>
+        </attribute>
+       </widget>
       </item>
       <item row="3" column="0" colspan="4">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -279,6 +292,11 @@
    <class>A429BitsView</class>
    <extends>QTableView</extends>
    <header location="global">view/a429bitsview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>A429BitsParseView</class>
+   <extends>QTableWidget</extends>
+   <header location="global">view/a429bitsparseview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

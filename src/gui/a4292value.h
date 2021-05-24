@@ -4,7 +4,7 @@
 
 #include "ui_a4292value.h"
 
-class A4292ValueData;
+class A4292ValuePrivate;
 class A4292Value: public QWidget, public Ui::A4292Value
 {
    Q_OBJECT
@@ -13,9 +13,12 @@ public:
    ~A4292Value();
 
 protected:
-   virtual void timerEvent(QTimerEvent* event) override;
+   void timerEvent(QTimerEvent* event) override;
 
+private slots:
+   void calculate();
 
 private:
-   A4292ValueData* d;
+   A4292ValuePrivate* d_ptr;
+   Q_DECLARE_PRIVATE(A4292Value)
 };

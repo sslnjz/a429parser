@@ -21,10 +21,10 @@ QWidget* A429BitsDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
    QWidget* editor = Q_NULLPTR;
    if (3 == index.column())
    {
-      eformat format;
+      EFormat format;
       QComboBox* combo = new QComboBox(parent);
       combo->setStyle(new AlignProxyStyle());
-      for (int i = 0; i < eformat::eRange; ++i)
+      for (int i = 0; i < EFormat::eRange; ++i)
       {
          combo->addItem(QString::fromStdString(format.name(i)));
       }

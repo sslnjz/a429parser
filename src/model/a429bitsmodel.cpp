@@ -85,7 +85,7 @@ QVariant A429BitsModel::data(const QModelIndex& index, int role) const
          case 0:
             return d_ptr->data[index.row()].lsb;
          case 1:
-            return d_ptr->data[index.row()].sigbit;
+            return d_ptr->data[index.row()].sigbits;
          case 2:
             return QString::number(d_ptr->data[index.row()].lsbres);
          case 3:
@@ -119,7 +119,7 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
          case 0:
             {
                int start = value.toUInt();
-               if (start + d->data[index.row()].sigbit <= 30)
+               if (start + d->data[index.row()].sigbits <= 30)
                {
                   bool valid = false;
                   if (d->data.size() <= 1)
@@ -128,11 +128,11 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
                   }
                   else if ((index.row() - 1) >= 0)
                   {
-                     valid = start >= (d->data[index.row() - 1].lsb + d->data[index.row() - 1].sigbit);
+                     valid = start >= (d->data[index.row() - 1].lsb + d->data[index.row() - 1].sigbits);
                   }
                   else if ((index.row() + 1) <= d->data.count())
                   {
-                     valid = (start + d->data[index.row()].sigbit) <= d->data[index.row() + 1].lsb;
+                     valid = (start + d->data[index.row()].sigbits) <= d->data[index.row() + 1].lsb;
                   }
 
                   d->data[index.row()].lsb = valid ? start : d->data[index.row()].lsb;
@@ -142,21 +142,37 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
          case 1:
             {
                int number = value.toUInt();
-               if (d->data[index.row()].lsb + number <= 30)
+               if (d->data[index.row()].format == "DIS")
                {
-                  bool valid = false;
+                  d->data[index.row()].sigbits = 1;
+                  d->data[index.row()].lsbres = 1;
+               }
+               else if (d->data[index.row()].lsb + number <= 30)
+               {
                   if (!((index.row() + 1) < d->data.count() && ((d->data[index.row()].lsb + number) >= d->data[index.row() + 1].lsb)))
                   {
-                     d->data[index.row()].sigbit = number;
+                     d->data[index.row()].sigbits = number;
                   }
                }
             }
             break;
          case 2:
-            d->data[index.row()].lsbres = value.toDouble();
+            {
+               if (d->data[index.row()].format == "DIS")
+                  d->data[index.row()].lsbres = 1;
+               else
+                  d->data[index.row()].lsbres = value.toDouble();
+            }
             break;
          case 3:
-            d_ptr->data[index.row()].format = value.toString().toStdString();
+            {
+               d->data[index.row()].format = value.toString().toStdString();
+               if (value.toString() == "DIS")
+               {
+                  d->data[index.row()].sigbits = 1;
+                  d->data[index.row()].lsbres = 1;
+               }
+            }
             break;
          case 4:
             d->data[index.row()].codedesc = value.toString().toStdString();
@@ -192,7 +208,7 @@ void A429BitsModel::appendRow()
    double scaled = 1.0f;
    for (size_t i = 0; i < d->data.size(); ++i)
    {
-      start = d->data[i].sigbit + d->data[i].lsb;
+      start = d->data[i].sigbits + d->data[i].lsb;
    }
 
    if ((start + numbit) > 30)

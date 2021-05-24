@@ -2,7 +2,7 @@
 
 #include <string>
 
-class eformat
+class EFormat
 { 
 public:
    enum {
@@ -14,20 +14,20 @@ public:
       eRange
    };
 
-   eformat()
+   EFormat()
    {
-      enumMap[DIS] = "DIS";
-      enumMap[BCD] = "BCD";
-      enumMap[BNR] = "BNR";
-      enumMap[CHR] = "CHR";
-      enumMap[COD] = "COD";
+      fmtmap[DIS] = "DIS";
+      fmtmap[BCD] = "BCD";
+      fmtmap[BNR] = "BNR";
+      fmtmap[CHR] = "CHR";
+      fmtmap[COD] = "COD";
    }
 
    std::string name(int index)
    {
-      if (enumMap.find(index) != enumMap.end())
+      if (fmtmap.find(index) != fmtmap.end())
       {
-         return enumMap[index];
+         return fmtmap[index];
       }
 
       return "";
@@ -35,8 +35,8 @@ public:
 
    int index(const std::string& name)
    {
-      auto iter = enumMap.begin();
-      while (iter != enumMap.end())
+      auto iter = fmtmap.begin();
+      while (iter != fmtmap.end())
       {
          if (iter->second == name)
             return iter->first;
@@ -46,20 +46,26 @@ public:
    }
 
 private:
-   std::map<int, std::string> enumMap;
+   std::map<int, std::string> fmtmap;
 };
 
 
 struct A429Bits
 {
    int         lsb;        //least significant bit
-   int         sigbit;     //significant bits
+   int         sigbits;    //significant bits numbert
    double      lsbres;     //least significant bit resolution
    std::string format;     //significant bits format
-   std::string codedesc;
+   std::string codedesc;   //significant bit encode
 };
 
 struct A429BitsValue : public A429Bits
 {
+   uint8_t label;
+   uint8_t SDI;
+   uint8_t SSM;
+   uint8_t parity;
+   uint32_t sig;           //significant bit
    double value;           //significant bits represent value
+   std::string code;       //significant bit decode
 };
