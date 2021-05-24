@@ -17,7 +17,7 @@ public:
    QStringList horizontalHeaders;
    QList<A429Bits> data;
 private:
-   A429BitsModel* q_ptr;
+   A429BitsModel* const q_ptr;
    Q_DECLARE_PUBLIC(A429BitsModel)
 };
 
@@ -33,12 +33,14 @@ A429BitsModel::~A429BitsModel()
 
 int A429BitsModel::rowCount(const QModelIndex& parent) const
 {
-   return d_ptr->data.size();
+   Q_D(const A429BitsModel);
+   return d->data.size();
 }
 
 int A429BitsModel::columnCount(const QModelIndex& parent) const
 {
-   return d_ptr->horizontalHeaders.size();
+   Q_D(const A429BitsModel);
+   return d->horizontalHeaders.size();
 }
 
 QVariant A429BitsModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -70,6 +72,7 @@ QVariant A429BitsModel::headerData(int section, Qt::Orientation orientation, int
 
 QVariant A429BitsModel::data(const QModelIndex& index, int role) const
 {
+   Q_D(const A429BitsModel);
    if (!index.isValid())
    {
       return QVariant();
@@ -78,20 +81,20 @@ QVariant A429BitsModel::data(const QModelIndex& index, int role) const
    switch (role)
    {
    case Qt::DisplayRole:
-      if (d_ptr->data.count() > 0)
+      if (d->data.count() > 0)
       {
          switch (index.column())
          {
          case 0:
-            return d_ptr->data[index.row()].lsb;
+            return d->data[index.row()].lsb;
          case 1:
-            return d_ptr->data[index.row()].sigbits;
+            return d->data[index.row()].sigbits;
          case 2:
-            return QString::number(d_ptr->data[index.row()].lsbres);
+            return QString::number(d->data[index.row()].lsbres);
          case 3:
-            return QString::fromStdString(d_ptr->data[index.row()].format);
+            return QString::fromStdString(d->data[index.row()].format);
          case 4:
-            return QString::fromStdString(d_ptr->data[index.row()].codedesc);
+            return QString::fromStdString(d->data[index.row()].codedesc);
          default:
             break;
          }
@@ -102,7 +105,7 @@ QVariant A429BitsModel::data(const QModelIndex& index, int role) const
       {
       case 4:
       {
-         if(d_ptr->data[index.row()].format == "BNR")
+         if(d->data[index.row()].format == "BNR")
             return QVariant(Qt::AlignCenter);
          else
             return QVariant(Qt::AlignVCenter | Qt::AlignLeft);
@@ -123,7 +126,7 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
    {
       if (!checkIndex(index))
          return false;
-      if (d_ptr->data.count() > 0)
+      if (d->data.count() > 0)
       {
          switch (index.column())
          {
@@ -203,8 +206,9 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
 
 Qt::ItemFlags A429BitsModel::flags(const QModelIndex& index) const
 {
+   Q_D(const A429BitsModel);
    EFormat format;
-   switch (format.index(d_ptr->data[index.row()].format))
+   switch (format.index(d->data[index.row()].format))
    {
    case EFormat::DIS:
    case EFormat::BCD:

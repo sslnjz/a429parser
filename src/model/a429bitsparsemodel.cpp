@@ -13,7 +13,7 @@ public:
    QList<A429BitsValue> data;
 
 private:
-   A429BitsParseModel* q_ptr;
+   A429BitsParseModel* const q_ptr;
    Q_DECLARE_PUBLIC(A429BitsParseModel);
 };
 
@@ -30,16 +30,19 @@ A429BitsParseModel::~A429BitsParseModel()
 
 int A429BitsParseModel::rowCount(const QModelIndex& parent) const
 {
-   return d_ptr->data.size();
+   Q_D(const A429BitsParseModel);
+   return d->data.size();
 }
 
 int A429BitsParseModel::columnCount(const QModelIndex& parent) const
 {
-   return d_ptr->horizontalHeaders.size();
+   Q_D(const A429BitsParseModel);
+   return d->horizontalHeaders.size();
 }
 
 QVariant A429BitsParseModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
+   Q_D(const A429BitsParseModel);
    switch (role)
    {
    case Qt::DisplayRole:
@@ -47,7 +50,7 @@ QVariant A429BitsParseModel::headerData(int section, Qt::Orientation orientation
       switch (orientation)
       {
       case Qt::Horizontal:
-         return d_ptr->horizontalHeaders[section];
+         return d->horizontalHeaders[section];
          break;
       case Qt::Vertical:
          return section + 1;
@@ -67,6 +70,7 @@ QVariant A429BitsParseModel::headerData(int section, Qt::Orientation orientation
 
 QVariant A429BitsParseModel::data(const QModelIndex& index, int role) const
 {
+   Q_D(const A429BitsParseModel);
    if (!index.isValid())
    {
       return QVariant();
@@ -80,19 +84,19 @@ QVariant A429BitsParseModel::data(const QModelIndex& index, int role) const
          switch (index.column())
          {
          case 0:
-            return QString("%1").arg(d_ptr->data[index.row()].label, int(4), int(8), QChar('0'));
+            return QString("%1").arg(d->data[index.row()].label, int(4), int(8), QChar('0'));
          case 1:
-            return QString("%1").arg(d_ptr->data[index.row()].SDI, int(2), int(2), QChar('0'));
+            return QString("%1").arg(d->data[index.row()].SDI, int(2), int(2), QChar('0'));
          case 2:
-            return QString("%1").arg(d_ptr->data[index.row()].SSM, int(2), int(2), QChar('0'));
+            return QString("%1").arg(d->data[index.row()].SSM, int(2), int(2), QChar('0'));
          case 3:
-            return d_ptr->data[index.row()].parity;
+            return d->data[index.row()].parity;
          case 4:
-            return QString("%1").arg(d_ptr->data[index.row()].sig, int(d_ptr->data[index.row()].sigbits), int(2), QChar('0')) ;
+            return QString("%1").arg(d->data[index.row()].sig, int(d->data[index.row()].sigbits), int(2), QChar('0')) ;
          case 5:
-            return d_ptr->data[index.row()].value;
+            return d->data[index.row()].value;
          case 6:
-            return QString::fromStdString(d_ptr->data[index.row()].code);
+            return QString::fromStdString(d->data[index.row()].code);
          default:
             break;
          }

@@ -26,6 +26,6 @@ public slots:
    void deleteRow();
 
 private:
-   A429BitsModelPrivate* d_ptr;
+   const QScopedPointer<A429BitsModelPrivate> d_ptr;
    Q_DECLARE_PRIVATE(A429BitsModel)
 };
