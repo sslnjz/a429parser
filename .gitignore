@@ -30,8 +30,8 @@
 *.exe
 *.out
 *.app
-build/.cmake/api/v1/query/client-vscode
 build
 cmake-build-release
+cmake-build-debug
 src/images/icons.iconset
 .vs/
