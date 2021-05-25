@@ -12,7 +12,12 @@ public:
    A429BitsParseView(QWidget* parent = Q_NULLPTR);
    ~A429BitsParseView();
 
+protected:
+   void resizeEvent(QResizeEvent* event) override;
+   void contextMenuEvent(QContextMenuEvent* event)override;
+
 public slots:
+   void horizontalHeaderContextMenuResopnse(const QPoint& pos);
    void setData(const QList<A429BitsValue>& data);
    void clear();
 

@@ -8,7 +8,10 @@ int main(int argc, char* argv[])
 {
    QApplication a(argc, argv);
 
+#if defined(Q_OS_MACOS)
    a.setStyle(QStyleFactory::create("Fusion"));
+#endif
+
    A429Parser parser;
    parser.show();
 

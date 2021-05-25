@@ -61,7 +61,7 @@ public:
       QHash<uint32_t, QString> codehash = codesplit(codedesc);
       if (codehash.find(value) != codehash.end())
       {
-         return QString("%1(%2)").arg(value).arg(codehash[value]);
+         return QString("%1").arg(codehash[value]);
       }
       else
       {
@@ -108,7 +108,7 @@ void A4292Value::timerEvent(QTimerEvent* event)
    if (event->timerId() == d->timerId)
    {
       bool isEnabled = !lineEditA429Word->text().isEmpty();
-      groupBoxA429Fmt->setEnabled(isEnabled);
+      frameA429Fmt->setEnabled(isEnabled);
       tableViewA429Region->setEnabled(isEnabled);
       pushButtonA429Calc->setEnabled(tableViewA429Region->model()->rowCount() > 0 && isEnabled);
    }

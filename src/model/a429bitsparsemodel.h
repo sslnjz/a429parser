@@ -24,5 +24,5 @@ public slots:
 
 private:
    const QScopedPointer<A429BitsParseModelPrivate> d_ptr;
-   Q_DECLARE_PRIVATE(A429BitsParseModel);
+   Q_DECLARE_PRIVATE(A429BitsParseModel)
 };

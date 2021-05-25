@@ -252,7 +252,7 @@ void A429BitsModel::appendRow()
 
    if ((start + numbit) > 30)
    {
-      QMessageBox::warning(qobject_cast<QWidget*>(parent()), tr("Warning"), tr("Bits number out of range"));
+      QMessageBox::warning(qobject_cast<QWidget*>(parent()), tr("Warning"), tr("significant bits out of range"));
       return;
    }
    d->data.append(A429Bits{start, numbit, scaled, "BCD", ""});
@@ -269,5 +269,13 @@ void A429BitsModel::deleteRow()
       int row = act->data().toInt();
       d->data.removeAt(row);
    }
+   endResetModel();
+}
+
+void A429BitsModel::setData(const QList<A429Bits>& data)
+{
+   Q_D(A429BitsModel);
+   beginResetModel();
+   d->data.append(data);
    endResetModel();
 }

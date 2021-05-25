@@ -24,6 +24,7 @@ public slots:
    void clear();
    void appendRow();
    void deleteRow();
+   void setData(const QList<A429Bits>& data);
 
 private:
    const QScopedPointer<A429BitsModelPrivate> d_ptr;

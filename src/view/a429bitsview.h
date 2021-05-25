@@ -11,9 +11,14 @@ public:
 	A429BitsView(QWidget* parent = Q_NULLPTR);
 	~A429BitsView();
 
+protected:
+	void resizeEvent(QResizeEvent* event);
+
 public slots:
 	void clear();
 	void appendRow();
+	void importTemplate();
+	void exportTemplate();
 
 protected:
 	virtual void contextMenuEvent(QContextMenuEvent*) override;

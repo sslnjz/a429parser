@@ -1,5 +1,7 @@
 #include "a429bitsparsemodel.h"
 
+#include <QSize>
+
 class A429BitsParseModelPrivate
 {
 public:
