@@ -23,7 +23,7 @@ public:
 public slots:
    void clear();
    void appendRow();
-   void deleteRow();
+   void deleteRow(int row);
    void setData(const QList<A429Bits>& data);
 
 private:

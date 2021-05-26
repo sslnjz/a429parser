@@ -69,3 +69,8 @@ struct A429BitsValue : public A429Bits
    double value;           //significant bits represent value
    std::string code;       //significant bit decode
 };
+
+struct A429BitsSet : public A429Bits
+{
+   double value;
+};

@@ -149,7 +149,7 @@
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="0" column="0">
-          <widget class="A429BitsView" name="tableViewValueRegion">
+          <widget class="A429BitsSetView" name="tableViewValueRegion">
            <property name="alternatingRowColors">
             <bool>true</bool>
            </property>
@@ -236,7 +236,10 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QGroupBox" name="groupBox_4">
+    <widget class="QGroupBox" name="groupBoxA429">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>A429</string>
      </property>
@@ -302,9 +305,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>A429BitsView</class>
+   <class>A429BitsSetView</class>
    <extends>QTableView</extends>
-   <header location="global">view/a429bitsview.h</header>
+   <header>view/a429bitssetview.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

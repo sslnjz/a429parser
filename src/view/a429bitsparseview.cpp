@@ -44,7 +44,7 @@ void A429BitsParseView::contextMenuEvent(QContextMenuEvent* event)
 void A429BitsParseView::setData(const QList<A429BitsValue>& data)
 {
    m_model->setData(data);
-   resizeColumnToContents(4);
+   resizeColumnsToContents();
 }
 
 void A429BitsParseView::clear()

@@ -2,6 +2,8 @@
 
 #include <QLineEdit>
 #include <QComboBox>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
 #include "a429bits.h"
 #include "aligndelegate.h"
@@ -19,26 +21,34 @@ A429BitsDelegate::~A429BitsDelegate()
 QWidget* A429BitsDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
    QWidget* editor = Q_NULLPTR;
-   if (3 == index.column())
+   switch (index.column())
    {
-      EFormat format;
-      QComboBox* combo = new QComboBox(parent);
-      combo->setStyle(new AlignProxyStyle());
-      for (int i = 0; i < EFormat::eRange; ++i)
+   case 0:
+   case 1:
+   case 2:
       {
-         combo->addItem(QString::fromStdString(format.name(i)));
+         QLineEdit* lineedit = new QLineEdit(parent);
+         lineedit->setAlignment(Qt::AlignHCenter);
+         connect(lineedit, &QLineEdit::editingFinished, this, &A429BitsDelegate::commitAndCloseEditor);
+         editor = lineedit;
       }
-      combo->setItemDelegate(new AlignDelegate(Qt::AlignCenter));
-      editor = combo;
-   }
-   else
-   {
-      QLineEdit* lineedit = new QLineEdit(parent);
-      lineedit->setAlignment(Qt::AlignHCenter);
-      connect(lineedit, &QLineEdit::editingFinished, this, &A429BitsDelegate::commitAndCloseEditor);
-      editor = lineedit;
-   }
-
+      break;
+   case 3:
+      {
+         EFormat format;
+         QComboBox* combo = new QComboBox(parent);
+         combo->setStyle(new AlignProxyStyle());
+         for (int i = 0; i < EFormat::eRange; ++i)
+         {
+            combo->addItem(QString::fromStdString(format.name(i)));
+         }
+         combo->setItemDelegate(new AlignDelegate(Qt::AlignCenter));
+         editor = combo;
+      }
+      break;
+   default:
+      break;
+   } 
    return editor;
 }
 

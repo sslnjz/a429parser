@@ -17,6 +17,7 @@ protected:
 public slots:
 	void clear();
 	void appendRow();
+	void deleteRow();
 	void importTemplate();
 	void exportTemplate();
 

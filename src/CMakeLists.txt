@@ -50,19 +50,26 @@ set(A429PARSER_SRCS
     "view/a429bitsview.cpp"
     "view/a429bitsparseview.h"
     "view/a429bitsparseview.cpp"
+    "view/a429bitssetview.h"
+    "view/a429bitssetview.cpp"
     "model/a429bitsmodel.h"
     "model/a429bitsmodel.cpp" 
     "model/a429bitsparsemodel.h"
     "model/a429bitsparsemodel.cpp"
+    "model/a429bitssetmodel.h" 
+    "model/a429bitssetmodel.cpp"
     "delegate/aligndelegate.h"
     "delegate/aligndelegate.cpp"
     "delegate/a429bitsdelegate.cpp" 
     "delegate/a429bitsdelegate.h"
+    "delegate/a429bitssetdelegate.h"
+    "delegate/a429bitssetdelegate.cpp"
     "a429parser.rc"
     "a429parser.qrc"
     "a429bits.h"
     "utils.h"
-    "main.cpp"  )
+    "utils.cpp"
+    "main.cpp")
 
 # Set some syetem Specific Settings
 if(WIN32)

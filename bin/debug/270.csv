@@ -1,0 +1,5 @@
+11,7,100,BNR,--none--
+18,3,1,COD,0=No Advisory;1=Clear of Conflict;2=Spare;3=Spare;4=Up Advisory Corrective;5=Down Advisory Corrective;6=Preventive;7=Not Used;
+21,3,1,COD,0=Ad.;1=Crossing;2=Reversal;3=Increase;4=Maintain;5=Not Used;6=Not Used;7=Not Used;
+24,3,1,COD,0=No Up Advisory;1=Climb;2=Don't Descend;3=Don't Descend > 500;4=Don't Descend >1000;5=Don't Descend >2000;
+27,3,1,COD,000=No Down Advisory;001=Descend;010=Don't Climb;011=Don't Climb > 500;100=Don't Climb > 1000;101=Don't Climb > 2000;

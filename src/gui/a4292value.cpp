@@ -3,8 +3,8 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 
-#include "utils.h"
 #include "a429bits.h"
+#include "utils.h"
 
 class A4292ValuePrivate
 {
@@ -161,7 +161,7 @@ void A4292Value::calculate()
 
       uint32_t sig = 0;
       double value = 0;
-      if (get_selected_bits(dword, lsb, sigbits, sig))
+      if (Utils::get_selected_bits(dword, lsb, sigbits, sig))
       {
          bitsValue.sig = sig;
          EFormat fmt;
@@ -169,14 +169,14 @@ void A4292Value::calculate()
          {
          case EFormat::DIS:
             {
-               get_bitsuint(dword, lsb, sigbits, lsbres, value);
+               Utils::get_bitsuint(dword, lsb, sigbits, lsbres, value);
                bitsValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
             }
             break;
          case EFormat::BCD:
             {
-               get_bitsbcd(dword, lsb, sigbits, lsbres, value);
+               Utils::get_bitsbcd(dword, lsb, sigbits, lsbres, value);
                bitsValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
                
@@ -184,7 +184,7 @@ void A4292Value::calculate()
             break;
          case EFormat::BNR:
             {
-               get_bits_2c(dword, lsb, sigbits, lsbres, value);
+               Utils::get_bits2c(dword, lsb, sigbits, lsbres, value);
                bitsValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
             }
@@ -196,7 +196,7 @@ void A4292Value::calculate()
             break;
          case EFormat::COD:
             {
-               get_bitsuint(dword, lsb, sigbits, lsbres, value);
+               Utils::get_bitsuint(dword, lsb, sigbits, lsbres, value);
                bitsValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
             }
@@ -206,7 +206,7 @@ void A4292Value::calculate()
          }
       }
 
-      bitsValue.label = radioButtonA429Reverse->isChecked() ? static_cast<uint8_t>(dword & 0xFF) : reverse_8bit(dword & 0xFF);
+      bitsValue.label = radioButtonA429Reverse->isChecked() ? static_cast<uint8_t>(dword & 0xFF) : Utils::reverse_8bit(dword & 0xFF);
       bitsValue.SDI = static_cast<uint8_t>((dword >> 8) & 0x03);
       bitsValue.SSM = static_cast<uint8_t>((dword >> 29) & 0x03);
       bitsValue.parity = static_cast<uint8_t>((dword >> 31) & 0x1);
@@ -217,7 +217,7 @@ void A4292Value::calculate()
    if(radioButtonA429Reverse->isChecked())
       lineEditA429Label->setText(QString("%1").arg(short(dword & 0xFF), int(4), int(8), QChar('0')));
    else
-      lineEditA429Label->setText(QString("%1").arg(short(reverse_8bit(dword & 0xFF)), int(4), int(8), QChar('0')));
+      lineEditA429Label->setText(QString("%1").arg(short(Utils::reverse_8bit(dword & 0xFF)), int(4), int(8), QChar('0')));
 
    lineEditA429Parity->setText(((dword >> 31) & 0x1) == 0 ? "Odd" : "Even");
    lineEditA429SDI->setText(QString("%1").arg(short((dword >> 8) & 0x03), int(2), int(2), QChar('0')));

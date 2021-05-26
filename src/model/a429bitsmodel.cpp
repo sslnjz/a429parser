@@ -90,7 +90,7 @@ QVariant A429BitsModel::data(const QModelIndex& index, int role) const
          case 1:
             return d->data[index.row()].sigbits;
          case 2:
-            return QString::number(d->data[index.row()].lsbres);
+            return QString::number(d->data[index.row()].lsbres, 'g', 10);
          case 3:
             return QString::fromStdString(d->data[index.row()].format);
          case 4:
@@ -133,7 +133,7 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
          case 0:
             {
                int start = value.toUInt();
-               if (start + d->data[index.row()].sigbits <= 30)
+               if (start + d->data[index.row()].sigbits <= 32)
                {
                   bool valid = false;
                   if (d->data.size() <= 1)
@@ -161,7 +161,7 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
                   d->data[index.row()].sigbits = 1;
                   d->data[index.row()].lsbres = 1;
                }
-               else if (d->data[index.row()].lsb + number <= 30)
+               else if (d->data[index.row()].lsb + number <= 32)
                {
                   if (!((index.row() + 1) < d->data.count() && ((d->data[index.row()].lsb + number) >= d->data[index.row() + 1].lsb)))
                   {
@@ -242,33 +242,28 @@ void A429BitsModel::appendRow()
 {
    Q_D(A429BitsModel);
    beginResetModel();
-   int start = 11;
-   int numbit = 1;
-   double scaled = 1.0f;
+   int lsb = 11;
+   int sigbits = 1;
+   double sigres = 1.0f;
    for (size_t i = 0; i < d->data.size(); ++i)
    {
-      start = d->data[i].sigbits + d->data[i].lsb;
+      lsb = d->data[i].sigbits + d->data[i].lsb;
    }
 
-   if ((start + numbit) > 30)
+   if ((lsb + sigbits) > 30)
    {
       QMessageBox::warning(qobject_cast<QWidget*>(parent()), tr("Warning"), tr("significant bits out of range"));
       return;
    }
-   d->data.append(A429Bits{start, numbit, scaled, "BCD", ""});
+   d->data.append(A429Bits{lsb, sigbits, sigres, "BCD", ""});
    endResetModel();
 }
 
-void A429BitsModel::deleteRow()
+void A429BitsModel::deleteRow(int row)
 {
    Q_D(A429BitsModel);
    beginResetModel();
-   QAction* act = qobject_cast<QAction*>(sender());
-   if (act)
-   {
-      int row = act->data().toInt();
-      d->data.removeAt(row);
-   }
+   d->data.removeAt(row);
    endResetModel();
 }
 

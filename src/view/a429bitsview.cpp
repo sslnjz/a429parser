@@ -39,6 +39,16 @@ void A429BitsView::appendRow()
    scrollToBottom();
 }
 
+void A429BitsView::deleteRow()
+{
+   QAction* action = qobject_cast<QAction*>(sender());
+   if (action)
+   {
+      int row = action->data().toInt();
+      m_model->deleteRow(row);
+   }
+}
+
 void A429BitsView::importTemplate()
 {
    QString templatefile = QFileDialog::getOpenFileName(this, tr("Selected Template"), 
@@ -148,7 +158,7 @@ void A429BitsView::contextMenuEvent(QContextMenuEvent* event)
    if (currentRow >= 0) {
       QAction* actDel = menu->addAction(tr("Delete"));
       actDel->setData(currentRow);
-      connect(actDel, &QAction::triggered, m_model, &A429BitsModel::deleteRow);
+      connect(actDel, &QAction::triggered, this, &A429BitsView::deleteRow);
    }
 
    menu->addSeparator();
