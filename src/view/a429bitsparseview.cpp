@@ -56,7 +56,7 @@ void A429BitsParseView::horizontalHeaderContextMenuResopnse(const QPoint& pos)
 {
    QMenu* menu = new QMenu(this);
 
-   for (size_t i = 0; i < m_model->columnCount(); i++)
+   for (int i = 0; i < m_model->columnCount(); i++)
    {
       QAction* action = menu->addAction(m_model->headerData(i, Qt::Horizontal).toString());
       action->setData(i);

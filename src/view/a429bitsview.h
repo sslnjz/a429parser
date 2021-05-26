@@ -12,7 +12,7 @@ public:
 	~A429BitsView();
 
 protected:
-	void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 
 public slots:
 	void clear();

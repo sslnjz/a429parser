@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>481</width>
-    <height>667</height>
+    <width>531</width>
+    <height>668</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -87,7 +87,7 @@ QTabBar::tab:selected {
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabA4292Value">
       <attribute name="title">
