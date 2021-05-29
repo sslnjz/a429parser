@@ -59,6 +59,12 @@ struct A429Bits
    std::string codedesc;   //significant bit encode
 };
 
+struct Significant
+{
+    double value;           //significant bits represent value
+    std::string str;        //significant bits represent string
+};
+
 struct A429BitsValue : public A429Bits
 {
    uint8_t label;
@@ -66,11 +72,6 @@ struct A429BitsValue : public A429Bits
    uint8_t SSM;
    uint8_t parity;
    uint32_t sig;           //significant bit
-   double value;           //significant bits represent value
+   Significant sigValue;
    std::string code;       //significant bit decode
-};
-
-struct A429BitsSet : public A429Bits
-{
-   double value;
 };

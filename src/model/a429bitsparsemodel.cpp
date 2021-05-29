@@ -16,7 +16,7 @@ public:
 
 private:
    A429BitsParseModel* const q_ptr;
-   Q_DECLARE_PUBLIC(A429BitsParseModel);
+   Q_DECLARE_PUBLIC(A429BitsParseModel)
 };
 
 A429BitsParseModel::A429BitsParseModel(QObject* parent)
@@ -32,12 +32,14 @@ A429BitsParseModel::~A429BitsParseModel()
 
 int A429BitsParseModel::rowCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent)
    Q_D(const A429BitsParseModel);
    return d->data.size();
 }
 
 int A429BitsParseModel::columnCount(const QModelIndex& parent) const
 {
+    Q_UNUSED(parent)
    Q_D(const A429BitsParseModel);
    return d->horizontalHeaders.size();
 }
@@ -53,10 +55,8 @@ QVariant A429BitsParseModel::headerData(int section, Qt::Orientation orientation
       {
       case Qt::Horizontal:
          return d->horizontalHeaders[section];
-         break;
       case Qt::Vertical:
          return section + 1;
-         break;
       default:
          break;
       }
@@ -96,7 +96,10 @@ QVariant A429BitsParseModel::data(const QModelIndex& index, int role) const
          case 4:
             return QString("%1").arg(d->data[index.row()].sig, int(d->data[index.row()].sigbits), int(2), QChar('0')) ;
          case 5:
-            return d->data[index.row()].value;
+             if(d->data[index.row()].format == "CHR")
+                 return QString::fromStdString(d->data[index.row()].sigValue.str);
+            else
+                 return d->data[index.row()].sigValue.value;
          case 6:
             return QString::fromStdString(d->data[index.row()].code);
          default:

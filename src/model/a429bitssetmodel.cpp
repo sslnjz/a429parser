@@ -11,7 +11,7 @@ public:
          << QObject::tr("Format") << QObject::tr("Value");
    }
 
-   QList<A429BitsSet> data;
+   QList<A429BitsValue> data;
    QStringList horizontalHeaders;
 private:
    A429BitsSetModel* const q_ptr;
@@ -92,7 +92,10 @@ QVariant A429BitsSetModel::data(const QModelIndex& index, int role) const
          case 3:
             return QString::fromStdString(d->data[index.row()].format);
          case 4:
-            return d->data[index.row()].value;
+             if(d->data[index.row()].format == "CHR")
+                 return QString::fromStdString(d->data[index.row()].sigValue.str);
+             else
+                return d->data[index.row()].sigValue.value;
          default:
             break;
          }
@@ -148,6 +151,11 @@ bool A429BitsSetModel::setData(const QModelIndex& index, const QVariant& value, 
                d->data[index.row()].sigbits = 1;
                d->data[index.row()].lsbres = 1;
             }
+            else if (d->data[index.row()].format == "CHR")
+            {
+                d->data[index.row()].sigbits = number % 7 == 0 ? number : 7;
+                d->data[index.row()].lsbres = 1;
+            }
             else if (d->data[index.row()].lsb + number <= 32)
             {
                if (!((index.row() + 1) < d->data.count() && ((d->data[index.row()].lsb + number) >= d->data[index.row() + 1].lsb)))
@@ -159,10 +167,18 @@ bool A429BitsSetModel::setData(const QModelIndex& index, const QVariant& value, 
          break;
          case 2:
          {
-            if (d->data[index.row()].format == "DIS")
-               d->data[index.row()].lsbres = 1;
+            if (d->data[index.row()].format == "DIS") {
+                d->data[index.row()].lsbres = 1;
+            }
+            else if (d->data[index.row()].format == "CHR")
+            {
+                d->data[index.row()].sigbits = d->data[index.row()].sigbits % 7 == 0 ? d->data[index.row()].sigbits : 7;
+                d->data[index.row()].lsbres = 1;
+            }
             else
-               d->data[index.row()].lsbres = value.toDouble();
+            {
+                d->data[index.row()].lsbres = value.toDouble();
+            }
          }
          break;
          case 3:
@@ -173,10 +189,18 @@ bool A429BitsSetModel::setData(const QModelIndex& index, const QVariant& value, 
                d->data[index.row()].sigbits = 1;
                d->data[index.row()].lsbres = 1;
             }
+            else if (value.toString() == "CHR")
+            {
+               d->data[index.row()].sigbits = d->data[index.row()].sigbits % 7 == 0 ? d->data[index.row()].sigbits : 7;
+               d->data[index.row()].lsbres = 1;
+            }
          }
          break;
          case 4:
-            d->data[index.row()].value = value.toDouble();
+             if(d->data[index.row()].format == "CHR")
+                d->data[index.row()].sigValue.str = value.toString().toStdString();
+             else
+                 d->data[index.row()].sigValue.value = value.toDouble();
             break;
          default:
             break;
@@ -189,10 +213,40 @@ bool A429BitsSetModel::setData(const QModelIndex& index, const QVariant& value, 
 
 Qt::ItemFlags A429BitsSetModel::flags(const QModelIndex& index) const
 {
-   return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+    Q_D(const A429BitsSetModel);
+    EFormat format;
+    switch (format.index(d->data[index.row()].format))
+    {
+        case EFormat::DIS:
+        case EFormat::BCD:
+        case EFormat::COD:
+            return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+        case EFormat::BNR:
+        {
+            switch (index.column())
+            {
+                case 4:
+                    return QAbstractTableModel::flags(index);
+                default:
+                    return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+            }
+        }
+        case EFormat::CHR:
+        {
+            switch (index.column())
+            {
+                case 2:
+                    return QAbstractTableModel::flags(index);
+                default:
+                    return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+            }
+        }
+        default:
+            return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+    }
 }
 
-void A429BitsSetModel::setData(const QList<A429BitsSet>& data)
+void A429BitsSetModel::setData(const QList<A429BitsValue>& data)
 {
    Q_D(A429BitsSetModel);
    beginResetModel();
@@ -217,7 +271,7 @@ void A429BitsSetModel::appendRow()
       QMessageBox::warning(qobject_cast<QWidget*>(parent()), tr("Warning"), tr("significant bits out of range"));
       return;
    }
-   d->data.append(A429BitsSet{ lsb, sigbits, sigres, "BCD", "", 1.0});
+   d->data.append(A429BitsValue{ lsb, sigbits, sigres, "BCD", ""});
    endResetModel();
 }
 

@@ -26,6 +26,7 @@ QWidget* A429BitsDelegate::createEditor(QWidget* parent, const QStyleOptionViewI
    case 0:
    case 1:
    case 2:
+   case 4:
       {
          QLineEdit* lineedit = new QLineEdit(parent);
          lineedit->setAlignment(Qt::AlignHCenter);

@@ -23,7 +23,7 @@ A429BitsParseView::~A429BitsParseView()
 
 void A429BitsParseView::resizeEvent(QResizeEvent* event)
 {
-   setColumnWidth(4, 85);
+   //setColumnWidth(4, 85);
    return QTableView::resizeEvent(event);
 }
 
@@ -32,7 +32,7 @@ void A429BitsParseView::contextMenuEvent(QContextMenuEvent* event)
    QMenu* menu = new QMenu(this);
    QAction* actNew = menu->addAction(tr("Reset"));
    connect(actNew, &QAction::triggered, [&]() {
-      for (size_t i = 0; i < m_model->columnCount(); i++)
+      for (int i = 0; i < m_model->columnCount(); i++)
       {
          setColumnHidden(i, false);
       }
@@ -44,7 +44,7 @@ void A429BitsParseView::contextMenuEvent(QContextMenuEvent* event)
 void A429BitsParseView::setData(const QList<A429BitsValue>& data)
 {
    m_model->setData(data);
-   resizeColumnsToContents();
+   resizeColumnToContents(4);
 }
 
 void A429BitsParseView::clear()

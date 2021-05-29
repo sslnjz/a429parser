@@ -87,7 +87,7 @@ void A429BitsSetView::importTemplate()
       QFile temp(templatefile);
       if (temp.open(QFile::ReadOnly))
       {
-         QList<A429BitsSet> bits;
+         QList<A429BitsValue> bits;
          QTextStream  in(&temp);
          while (!in.atEnd())
          {
@@ -95,7 +95,7 @@ void A429BitsSetView::importTemplate()
             QStringList columns = line.split(",", Qt::SkipEmptyParts);
             if (5 == columns.size())
             {
-               A429BitsSet bit{};
+                A429BitsValue bit{};
                for (size_t i = 0; i < columns.size(); ++i)
                {
                   switch (i)
@@ -113,7 +113,10 @@ void A429BitsSetView::importTemplate()
                      bit.format = columns[i].toStdString();
                      break;
                   case 4:
-                     bit.value = columns[i].toDouble();
+                      if(bit.format == "CHR")
+                          bit.sigValue.str = columns[i].toStdString();
+                      else
+                        bit.sigValue.value = columns[i].toDouble();
                      break;
                   default:
                      break;

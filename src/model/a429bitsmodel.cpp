@@ -161,6 +161,11 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
                   d->data[index.row()].sigbits = 1;
                   d->data[index.row()].lsbres = 1;
                }
+               else if (d->data[index.row()].format == "CHR")
+               {
+                 d->data[index.row()].sigbits = (number % 7) == 0 ? number : 7;
+                 d->data[index.row()].lsbres = 1;
+               }
                else if (d->data[index.row()].lsb + number <= 32)
                {
                   if (!((index.row() + 1) < d->data.count() && ((d->data[index.row()].lsb + number) >= d->data[index.row() + 1].lsb)))
@@ -172,8 +177,14 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
             break;
          case 2:
             {
-               if (d->data[index.row()].format == "DIS")
-                  d->data[index.row()].lsbres = 1;
+               if (d->data[index.row()].format == "DIS") {
+                   d->data[index.row()].lsbres = 1;
+               }
+               else if (d->data[index.row()].format == "CHR")
+               {
+                   d->data[index.row()].sigbits = (d->data[index.row()].sigbits % 7) == 0 ? d->data[index.row()].sigbits : 7;
+                   d->data[index.row()].lsbres = 1;
+               }
                else
                   d->data[index.row()].lsbres = value.toDouble();
             }
@@ -186,9 +197,14 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
                   d->data[index.row()].sigbits = 1;
                   d->data[index.row()].lsbres = 1;
                }
+               else if (d->data[index.row()].format == "CHR")
+               {
+                   d->data[index.row()].sigbits = (d->data[index.row()].sigbits % 7) == 0 ? d->data[index.row()].sigbits : 7;
+                   d->data[index.row()].lsbres = 1;
+               }
                else if (value.toString() == "BNR")
                {
-                  d->data[index.row()].codedesc = "--none--";
+                  d->data[index.row()].codedesc = "";
                }
             }
             break;
@@ -212,7 +228,6 @@ Qt::ItemFlags A429BitsModel::flags(const QModelIndex& index) const
    {
    case EFormat::DIS:
    case EFormat::BCD:
-   case EFormat::CHR:
    case EFormat::COD:
       return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
    case EFormat::BNR:
@@ -225,6 +240,16 @@ Qt::ItemFlags A429BitsModel::flags(const QModelIndex& index) const
             return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
          }
       }
+   case EFormat::CHR:
+   {
+       switch (index.column())
+       {
+           case 2:
+               return QAbstractTableModel::flags(index);
+           default:
+               return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+       }
+   }
    default:
       return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
    }

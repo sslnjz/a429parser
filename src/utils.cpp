@@ -132,7 +132,7 @@ bool Utils::set_bitschar(const uint32_t& startbit, const uint32_t& numbits, cons
       return false;
 
    for (size_t i = 0; i < str.length(); ++i)
-      word |= static_cast<uint8_t>(str[i]) << ((startbit - 1) + (i * 8));
+      word |= static_cast<uint8_t>(str[i]) << ((startbit - 1) + (i * 7));
 
    return true;
 }
@@ -154,10 +154,11 @@ bool Utils::get_bitschar(const uint32_t& word, const uint32_t& startbit, const u
    /// at bit 1. Then multiply result by scale factor
    uint32_t value = ((word & mask) >> (startbit - 1));
 
-   uint32_t step = 0;
-   while ( (step * 7) < numbits)
+   uint32_t index = 0;
+   while ( (index * 7) <= numbits)
    {
-      str += static_cast<char>((value >> (step * 7)) & 0x7F);
+      str += static_cast<char>((value >> (index * 7)) & 0x7F);
+      ++index;
    }
 
    return true;

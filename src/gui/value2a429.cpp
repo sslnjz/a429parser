@@ -76,6 +76,7 @@ void Value2A429::decode()
       int sigbits = tableViewValueRegion->model()->index(i, 1).data().toUInt();
       double lsbres = tableViewValueRegion->model()->index(i, 2).data().toDouble();
       std::string format = tableViewValueRegion->model()->index(i, 3).data().toString().toStdString();
+
       double value = tableViewValueRegion->model()->index(i, 4).data().toDouble();
 
       EFormat eformat;
@@ -91,6 +92,8 @@ void Value2A429::decode()
          Utils::set_bits2c(lsb, sigbits, lsbres, value, dword);
          break;
       case EFormat::CHR:
+          Utils::set_bitschar(lsb, sigbits,
+                              tableViewValueRegion->model()->index(i, 4).data().toString().toStdString(), dword);
          break;
       case EFormat::COD:
          Utils::set_bitsuint(lsb, sigbits, lsbres, value, dword);

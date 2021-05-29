@@ -20,7 +20,7 @@ public:
    Qt::ItemFlags flags(const QModelIndex& index) const override;
 
 public slots:
-   void setData(const QList<A429BitsSet>& data);
+   void setData(const QList<A429BitsValue>& data);
    void appendRow();
    void deleteRow(int row);
    void clear();

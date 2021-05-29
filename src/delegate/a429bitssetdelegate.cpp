@@ -58,7 +58,8 @@ QWidget* A429BitsSetDelegate::createEditor(QWidget* parent, const QStyleOptionVi
    case 4:
       {
          QLineEdit* lineedit = new QLineEdit(parent);
-         lineedit->setValidator(new QDoubleValidator(lineedit));
+         if("CHR" != index.model()->index(index.row(), 3).data().toString())
+            lineedit->setValidator(new QDoubleValidator(lineedit));
          lineedit->setAlignment(Qt::AlignHCenter);
          connect(lineedit, &QLineEdit::editingFinished, this, &A429BitsSetDelegate::commitAndCloseEditor);
          editor = lineedit;

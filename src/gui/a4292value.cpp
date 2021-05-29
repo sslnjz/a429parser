@@ -124,7 +124,7 @@ void A4292Value::calculate()
    QList<A429BitsValue> data;
    for (size_t i = 0; i < tableViewA429Region->model()->rowCount(); ++i)
    {
-      A429BitsValue bitsValue{};
+      A429BitsValue bitsValue;
       uint32_t lsb = 0, sigbits = 0;
       double lsbres = 0.0;
       QString format;
@@ -170,14 +170,14 @@ void A4292Value::calculate()
          case EFormat::DIS:
             {
                Utils::get_bitsuint(dword, lsb, sigbits, lsbres, value);
-               bitsValue.value = value;
+               bitsValue.sigValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
             }
             break;
          case EFormat::BCD:
             {
                Utils::get_bitsbcd(dword, lsb, sigbits, lsbres, value);
-               bitsValue.value = value;
+               bitsValue.sigValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
                
             }
@@ -185,19 +185,21 @@ void A4292Value::calculate()
          case EFormat::BNR:
             {
                Utils::get_bits2c(dword, lsb, sigbits, lsbres, value);
-               bitsValue.value = value;
+               bitsValue.sigValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
             }
             break;
          case EFormat::CHR:
             {
-
+                std::string str;
+                Utils::get_bitschar(dword, lsb, sigbits, str);
+                bitsValue.sigValue.str = str;
             }
             break;
          case EFormat::COD:
             {
                Utils::get_bitsuint(dword, lsb, sigbits, lsbres, value);
-               bitsValue.value = value;
+               bitsValue.sigValue.value = value;
                bitsValue.code = d->code(codedesc, value).toStdString();
             }
             break;
