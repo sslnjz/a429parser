@@ -34,12 +34,14 @@ A429BitsModel::~A429BitsModel()
 int A429BitsModel::rowCount(const QModelIndex& parent) const
 {
    Q_D(const A429BitsModel);
+   Q_UNUSED(parent);
    return d->data.size();
 }
 
 int A429BitsModel::columnCount(const QModelIndex& parent) const
 {
    Q_D(const A429BitsModel);
+   Q_UNUSED(parent);
    return d->horizontalHeaders.size();
 }
 

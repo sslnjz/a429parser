@@ -25,5 +25,6 @@ AlignProxyStyle::AlignProxyStyle(QStyle* style)
 
 void AlignProxyStyle::drawItemText(QPainter* painter, const QRect& rect, int alignment, const QPalette& pal, bool enabled, const QString& text, QPalette::ColorRole textRole) const
 {
+   Q_UNUSED(alignment)
    QProxyStyle::drawItemText(painter, rect.adjusted(0, 0, 0, 0), Qt::AlignCenter, pal, enabled, text, textRole);
 }

@@ -20,6 +20,7 @@ A429BitsDelegate::~A429BitsDelegate()
 
 QWidget* A429BitsDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+   Q_UNUSED(option)
    QWidget* editor = Q_NULLPTR;
    switch (index.column())
    {

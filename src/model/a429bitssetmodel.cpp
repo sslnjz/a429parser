@@ -31,13 +31,15 @@ A429BitsSetModel::~A429BitsSetModel()
 int A429BitsSetModel::rowCount(const QModelIndex& parent) const
 {
    Q_D(const A429BitsSetModel);
-   return d->data.size();
+   Q_UNUSED(parent);
+   return static_cast<int>(d->data.size());
 }
 
 int A429BitsSetModel::columnCount(const QModelIndex& parent) const
 {
    Q_D(const A429BitsSetModel);
-   return d->horizontalHeaders.size();
+   Q_UNUSED(parent);
+   return static_cast<int>(d->horizontalHeaders.size());
 }
 
 QVariant A429BitsSetModel::headerData(int section, Qt::Orientation orientation, int role) const

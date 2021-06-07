@@ -32,16 +32,16 @@ A429BitsParseModel::~A429BitsParseModel()
 
 int A429BitsParseModel::rowCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent)
+   Q_UNUSED(parent)
    Q_D(const A429BitsParseModel);
-   return d->data.size();
+   return static_cast<int>(d->data.size());
 }
 
 int A429BitsParseModel::columnCount(const QModelIndex& parent) const
 {
-    Q_UNUSED(parent)
+   Q_UNUSED(parent)
    Q_D(const A429BitsParseModel);
-   return d->horizontalHeaders.size();
+   return static_cast<int>(d->horizontalHeaders.size());
 }
 
 QVariant A429BitsParseModel::headerData(int section, Qt::Orientation orientation, int role) const
