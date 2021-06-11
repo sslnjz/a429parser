@@ -26,6 +26,9 @@ public slots:
    void deleteRow(int row);
    void setData(const QList<A429Bits>& data);
 
+signals:
+   void warning(const QString& title, const QString& desc);
+
 private:
    const QScopedPointer<A429BitsModelPrivate> d_ptr;
    Q_DECLARE_PRIVATE(A429BitsModel)

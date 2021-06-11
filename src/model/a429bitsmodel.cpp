@@ -5,12 +5,16 @@
 
 #include "a429bits.h"
 
-class A429BitsModelPrivate : public QObject
+class A429BitsModelPrivate 
 {
 public:
    A429BitsModelPrivate(A429BitsModel* q) : q_ptr(q)
    {
-      horizontalHeaders << tr("LSB") << tr("Bits Number") << tr("LSB Res") << tr("Format") << tr("Encode");
+      horizontalHeaders << QObject::tr("LSB") 
+                        << QObject::tr("Bits Number") 
+                        << QObject::tr("LSB Res") 
+                        << QObject::tr("Format") 
+                        << QObject::tr("Encode");
    }
 
 public:
@@ -158,55 +162,78 @@ bool A429BitsModel::setData(const QModelIndex& index, const QVariant& value, int
          case 1:
             {
                int number = value.toUInt();
-               if (d->data[index.row()].format == "DIS")
+               EFormat format;
+               switch (format.index(d->data[index.row()].format))
                {
-                  d->data[index.row()].sigbits = 1;
-                  d->data[index.row()].lsbres = 1;
-               }
-               else if (d->data[index.row()].format == "CHR")
-               {
-                 d->data[index.row()].sigbits = (number % 7) == 0 ? number : 7;
-                 d->data[index.row()].lsbres = 1;
-               }
-               else if (d->data[index.row()].lsb + number <= 32)
-               {
-                  if (!((index.row() + 1) < d->data.count() && ((d->data[index.row()].lsb + number) >= d->data[index.row() + 1].lsb)))
+               case EFormat::DIS:
                   {
-                     d->data[index.row()].sigbits = number;
+                     d->data[index.row()].sigbits = 1;
+                     d->data[index.row()].lsbres = 1;
                   }
+                  break;
+               case EFormat::CHR:
+                  {
+                     d->data[index.row()].sigbits = (number % 7) == 0 ? number : 7;
+                     d->data[index.row()].lsbres = 1;
+                  }
+                  break;
+               default:
+                  {
+                     if (d->data[index.row()].lsb + number <= 32)
+                     {
+                        if (!((index.row() + 1) < d->data.count() && ((d->data[index.row()].lsb + number) >= d->data[index.row() + 1].lsb)))
+                        {
+                           d->data[index.row()].sigbits = number;
+                        }
+                     }
+                  }
+                  break;
                }
             }
             break;
          case 2:
             {
-               if (d->data[index.row()].format == "DIS") {
-                   d->data[index.row()].lsbres = 1;
-               }
-               else if (d->data[index.row()].format == "CHR")
+               EFormat format;
+               switch (format.index(d->data[index.row()].format))
                {
-                   d->data[index.row()].sigbits = (d->data[index.row()].sigbits % 7) == 0 ? d->data[index.row()].sigbits : 7;
-                   d->data[index.row()].lsbres = 1;
-               }
-               else
+               case EFormat::DIS:
+                  d->data[index.row()].lsbres = 1;
+                  break;
+               case EFormat::CHR:
+                  {
+                     d->data[index.row()].sigbits = (d->data[index.row()].sigbits % 7) == 0 ? d->data[index.row()].sigbits : 7;
+                     d->data[index.row()].lsbres = 1;
+                  }
+                  break;
+               default:
                   d->data[index.row()].lsbres = value.toDouble();
+                  break;
+               }
             }
             break;
          case 3:
             {
                d->data[index.row()].format = value.toString().toStdString();
-               if (value.toString() == "DIS")
+               EFormat format;
+               switch (format.index(d->data[index.row()].format))
                {
-                  d->data[index.row()].sigbits = 1;
-                  d->data[index.row()].lsbres = 1;
-               }
-               else if (d->data[index.row()].format == "CHR")
-               {
-                   d->data[index.row()].sigbits = (d->data[index.row()].sigbits % 7) == 0 ? d->data[index.row()].sigbits : 7;
-                   d->data[index.row()].lsbres = 1;
-               }
-               else if (value.toString() == "BNR")
-               {
+               case EFormat::DIS:
+                  {
+                     d->data[index.row()].sigbits = 1;
+                     d->data[index.row()].lsbres = 1;
+                  }
+                  break;
+               case EFormat::CHR:
+                  {
+                     d->data[index.row()].sigbits = (d->data[index.row()].sigbits % 7) == 0 ? d->data[index.row()].sigbits : 7;
+                     d->data[index.row()].lsbres = 1;
+                  }
+                  break;
+               case EFormat::BNR:
                   d->data[index.row()].codedesc = "";
+                  break;
+               default:
+                  break;
                }
             }
             break;
@@ -229,6 +256,16 @@ Qt::ItemFlags A429BitsModel::flags(const QModelIndex& index) const
    switch (format.index(d->data[index.row()].format))
    {
    case EFormat::DIS:
+   {
+      switch (index.column())
+      {
+      case 1:
+      case 2:
+         return QAbstractTableModel::flags(index);
+      default:
+         return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+      }
+   }
    case EFormat::BCD:
    case EFormat::COD:
       return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
@@ -244,13 +281,13 @@ Qt::ItemFlags A429BitsModel::flags(const QModelIndex& index) const
       }
    case EFormat::CHR:
    {
-       switch (index.column())
-       {
-           case 2:
-               return QAbstractTableModel::flags(index);
-           default:
-               return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
-       }
+      switch (index.column())
+      {
+      case 2:
+         return QAbstractTableModel::flags(index);
+      default:
+         return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+      }
    }
    default:
       return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
@@ -279,7 +316,7 @@ void A429BitsModel::appendRow()
 
    if ((lsb + sigbits) > 30)
    {
-      QMessageBox::warning(qobject_cast<QWidget*>(parent()), tr("Warning"), tr("significant bits out of range"));
+      emit warning(tr("Warning"), tr("significant bits out of range"));
       return;
    }
    d->data.append(A429Bits{lsb, sigbits, sigres, "BCD", ""});

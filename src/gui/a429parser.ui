@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
+    <width>470</width>
     <height>668</height>
    </rect>
   </property>
@@ -87,11 +87,11 @@ QTabBar::tab:selected {
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabA4292Value">
       <attribute name="title">
-       <string>A429-&gt;Value</string>
+       <string>A429 Unpack</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayoutA4292Value">
        <property name="leftMargin">
@@ -110,7 +110,7 @@ QTabBar::tab:selected {
      </widget>
      <widget class="QWidget" name="tabValue2A429">
       <attribute name="title">
-       <string>Value-&gt;A429</string>
+       <string>A429 pack</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayoutValue2A429">
        <property name="leftMargin">
@@ -129,7 +129,7 @@ QTabBar::tab:selected {
      </widget>
      <widget class="QWidget" name="tabA4292ValueBatch">
       <attribute name="title">
-       <string>A429-&gt;Value(Batch)</string>
+       <string>A429 Unpack(Batch)</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayoutA4292ValueBatch">
        <property name="leftMargin">

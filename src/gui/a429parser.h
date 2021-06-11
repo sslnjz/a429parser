@@ -11,4 +11,6 @@ public:
    A429Parser(QWidget* parent = Q_NULLPTR);
    ~A429Parser();
 
+public slots:
+   void message(int level, const QString& title, const QString& desc);
 };

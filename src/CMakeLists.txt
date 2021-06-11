@@ -69,7 +69,7 @@ set(A429PARSER_SRCS
     "a429bits.h"
     "utils.h"
     "utils.cpp"
-    "main.cpp")
+    "main.cpp" "messagelevel.h")
 
 # Set some syetem Specific Settings
 if(WIN32)

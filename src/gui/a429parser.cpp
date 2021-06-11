@@ -2,6 +2,9 @@
 #include "a4292value.h"
 #include "value2a429.h"
 #include "a4292valuebatch.h"
+#include "messagelevel.h"
+
+#include <qmessagebox.h>
 
 A429Parser::A429Parser(QWidget* parent)
    : QWidget(parent)
@@ -17,4 +20,25 @@ A429Parser::A429Parser(QWidget* parent)
 A429Parser::~A429Parser()
 {
 
+}
+
+void A429Parser::message(int level, const QString& title, const QString& desc)
+{
+   switch (level)
+   {
+   case MsgLevel::Question:
+      QMessageBox::question(this, title, desc);
+      break;
+   case MsgLevel::Information:
+      QMessageBox::information(this, title, desc);
+      break;
+   case MsgLevel::Warning:
+      QMessageBox::warning(this, title, desc);
+      break;
+   case MsgLevel::Critical:
+      QMessageBox::critical(this, title, desc);
+      break;
+   default:
+      break;
+   }
 }

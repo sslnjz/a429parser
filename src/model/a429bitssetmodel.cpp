@@ -7,8 +7,11 @@ class A429BitsSetModelPrivate
 public:
    A429BitsSetModelPrivate(A429BitsSetModel* q) : q_ptr(q)
    {
-      horizontalHeaders << QObject::tr("LSB") << QObject::tr("Bits Number") << QObject::tr("LSB Res")
-         << QObject::tr("Format") << QObject::tr("Value");
+      horizontalHeaders << QObject::tr("LSB") 
+                        << QObject::tr("Bits Number") 
+                        << QObject::tr("LSB Res")
+                        << QObject::tr("Format") 
+                        << QObject::tr("Value");
    }
 
    QList<A429BitsValue> data;
@@ -94,10 +97,17 @@ QVariant A429BitsSetModel::data(const QModelIndex& index, int role) const
          case 3:
             return QString::fromStdString(d->data[index.row()].format);
          case 4:
-             if(d->data[index.row()].format == "CHR")
-                 return QString::fromStdString(d->data[index.row()].sigValue.str);
-             else
-                return d->data[index.row()].sigValue.value;
+         {
+            EFormat format;
+            switch (format.index(d->data[index.row()].format))
+            {
+            case EFormat::CHR:
+               return QString::fromStdString(d->data[index.row()].sigValue.str);
+            default:
+               return d->data[index.row()].sigValue.value;
+               break;
+            }
+         }      
          default:
             break;
          }
@@ -220,19 +230,20 @@ Qt::ItemFlags A429BitsSetModel::flags(const QModelIndex& index) const
     switch (format.index(d->data[index.row()].format))
     {
         case EFormat::DIS:
+        {  
+           switch (index.column())
+           {
+           case 1:
+           case 2:
+              return QAbstractTableModel::flags(index);
+           default:
+              return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
+           }
+        }
         case EFormat::BCD:
         case EFormat::COD:
-            return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
         case EFormat::BNR:
-        {
-            switch (index.column())
-            {
-                case 4:
-                    return QAbstractTableModel::flags(index);
-                default:
-                    return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
-            }
-        }
+            return Qt::ItemIsEditable | QAbstractTableModel::flags(index);
         case EFormat::CHR:
         {
             switch (index.column())
