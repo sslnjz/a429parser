@@ -7,7 +7,7 @@ class Utils
 {
 public:
    static uint8_t reverse_8bit(uint8_t src);
-   static bool calculate_parity(uint32_t value, bool even = true);
+   static bool calculate_parity(uint32_t value, bool even = false);
    static bool get_selected_bits(const uint32_t& word, const uint32_t startBit, const uint32_t numBits, uint32_t& selected);
    static bool get_bits2c(const uint32_t& word, const uint32_t startBit, const uint32_t numBits, const int32_t valueLSB, uint32_t& value);
    static bool get_bits2c(const uint32_t& word, const uint32_t startBit, const uint32_t numBits, const double valueLSB, double& value);

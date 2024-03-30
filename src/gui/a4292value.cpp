@@ -110,7 +110,7 @@ void A4292Value::timerEvent(QTimerEvent* event)
       bool isEnabled = !lineEditA429Word->text().isEmpty();
       frameA429Fmt->setEnabled(isEnabled);
       tableViewA429Region->setEnabled(isEnabled);
-      pushButtonA429Calc->setEnabled(tableViewA429Region->model()->rowCount() > 0 && isEnabled);
+      pushButtonA429Calc->setEnabled(isEnabled);
    }
    return QWidget::timerEvent(event);
 }

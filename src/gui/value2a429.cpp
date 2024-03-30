@@ -103,11 +103,11 @@ void Value2A429::decode()
       }
    }
 
-   Utils::calculate_parity(dword);
+   dword = (Utils::calculate_parity(dword) << 31) | dword;
 
    lineEditValueInt->setText(QString::number(dword));
    lineEditValueWord->setText(QString::fromStdString(std::bitset<32>(dword).to_string()));
-   lineEditValueParity->setText( (dword >> 30) == 1 ? "Even" : "Odd" );
+   lineEditValueParity->setText( (dword >> 31) == 1 ? "Even" : "Odd" );
 
    groupBoxA429->setEnabled(true);
 }
