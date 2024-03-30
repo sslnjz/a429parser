@@ -12,7 +12,7 @@ uint8_t Utils::reverse_8bit(uint8_t src)
 bool Utils::calculate_parity(uint32_t value, bool even)
 {
    uint32_t count = bit_one_count(value);
-   return even ? (count % 2) != 0 : count % 2 == 0;
+   return even ? (count % 2 != 0) : (count % 2 == 0);
 }
 
 bool Utils::get_selected_bits(const uint32_t& word, const uint32_t startBit, const uint32_t numBits, uint32_t& selected)
@@ -303,7 +303,7 @@ bool Utils::get_bits_2c_helper(const uint32_t& word, const uint32_t startBit, co
    if (static_cast<uint32_t>(value) >= c)
    {
       const uint32_t& d = static_cast<uint32_t>(one << numBits);
-      value |= (0xffffffff - d + 1);
+      value |= 0xffffffff - d + 1;
    }
 
    return true;

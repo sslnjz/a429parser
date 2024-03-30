@@ -21,6 +21,8 @@ configure_file(
 )
 
 # Setup output directories.
+
+set(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/bin/install")
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 if (CMAKE_BUILD_TYPE MATCHES "Debug")
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/debug)

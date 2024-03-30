@@ -2,7 +2,6 @@
 #include "a4292value.h"
 #include "value2a429.h"
 #include "a4292valuebatch.h"
-#include "messagelevel.h"
 
 #include <qmessagebox.h>
 
@@ -26,16 +25,16 @@ void A429Parser::message(int level, const QString& title, const QString& desc)
 {
    switch (level)
    {
-   case MsgLevel::Question:
+   case 0:
       QMessageBox::question(this, title, desc);
       break;
-   case MsgLevel::Information:
+   case 1:
       QMessageBox::information(this, title, desc);
       break;
-   case MsgLevel::Warning:
+   case 2:
       QMessageBox::warning(this, title, desc);
       break;
-   case MsgLevel::Critical:
+   case 3:
       QMessageBox::critical(this, title, desc);
       break;
    default:

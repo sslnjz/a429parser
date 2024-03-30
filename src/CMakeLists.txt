@@ -3,15 +3,6 @@
 #
 cmake_minimum_required (VERSION 3.10...3.18)
 
-#set QT_DIR for your environment
-if(APPLE)
-    set(QT_DIR "~/Documents/Library/Qt/6.1.0/clang_64")
-    set(CMAKE_PREFIX_PATH "${QT_DIR}\\lib\\cmake")
-elseif(WIN32)
-    set(QT_DIR "D:\\Tools\\Qt\\6.1.0\\msvc2019_64")
-    set(CMAKE_PREFIX_PATH "${QT_DIR}\\lib\\cmake")
-endif()
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -19,7 +10,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 COMPONENTS Core Gui Widgets PrintSupport REQUIRED)
+
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets PrintSupport )
+qt_standard_project_setup()
 
 include_directories(
     .
@@ -69,59 +62,42 @@ set(A429PARSER_SRCS
     "a429bits.h"
     "utils.h"
     "utils.cpp"
-    "main.cpp" "messagelevel.h")
+    "main.cpp" )
 
 # Set some syetem Specific Settings
 if(WIN32)
-    add_executable (A429Parser WIN32 ${A429PARSER_SRCS})
+    qt_add_executable(${PROJECT_NAME} WIN32 ${A429PARSER_SRCS})
 elseif (APPLE)
     set(MACOSX_BUNDLE_ICON_FILE "a429parser.icns")
     set(APP_ICON_MACOSX ${CMAKE_CURRENT_SOURCE_DIR}/images/a429parser.icns)
     set_source_files_properties(${APP_ICON_MACOSX}
             PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
-    add_executable (A429Parser MACOSX_BUNDLE ${APP_ICON_MACOSX} ${A429PARSER_SRCS})
+    add_executable (${PROJECT_NAME} MACOSX_BUNDLE ${APP_ICON_MACOSX} ${A429PARSER_SRCS})
 endif ()
 
 # Add source to this project's executable.
-target_link_libraries(A429Parser PRIVATE 
+target_link_libraries(${PROJECT_NAME} PRIVATE 
     Qt6::Core 
     Qt6::Gui 
-    Qt6::Widgets 
+    Qt6::Widgets
     Qt6::PrintSupport
 )
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    WIN32_EXECUTABLE ON
+    MACOSX_BUNDLE ON
+)
 
-# Copy after build finished on Windows
-if(WIN32)
-    if (CMAKE_BUILD_TYPE MATCHES "Debug")
-        add_custom_command(TARGET A429Parser POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${QT_DIR}\\bin\\Qt6Cored.dll"
-                "${QT_DIR}\\bin\\Qt6Guid.dll"
-                "${QT_DIR}\\bin\\Qt6Widgetsd.dll"
-                "${QT_DIR}\\bin\\Qt6PrintSupportd.dll"
-                $<TARGET_FILE_DIR:A429Parser>
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${QT_DIR}\\plugins\\platforms\\qwindowsd.dll"
-                $<TARGET_FILE_DIR:A429Parser>\\platforms\\qwindowsd.dll
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${QT_DIR}\\plugins\\styles\\qwindowsvistastyled.dll"
-                $<TARGET_FILE_DIR:A429Parser>\\styles\\qwindowsvistastyled.dll)
-    else ()
-            add_custom_command(TARGET A429Parser POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${QT_DIR}\\bin\\Qt6Core.dll"
-                "${QT_DIR}\\bin\\Qt6Gui.dll"
-                "${QT_DIR}\\bin\\Qt6Widgets.dll"
-                "${QT_DIR}\\bin\\Qt6PrintSupport.dll"
-                "$<TARGET_FILE_DIR:A429Parser>"
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${QT_DIR}\\plugins\\platforms\\qwindows.dll"
-                $<TARGET_FILE_DIR:A429Parser>\\platforms\\qwindows.dll
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                "${QT_DIR}\\plugins\\styles\\qwindowsvistastyle.dll"
-                $<TARGET_FILE_DIR:A429Parser>\\styles\\qwindowsvistastyle.dll)  
-    endif()
-endif()
+install(TARGETS ${PROJECT_NAME}
+    BUNDLE  DESTINATION .
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+qt_generate_deploy_app_script(
+    TARGET ${PROJECT_NAME}
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})
 
 
 # TODO: Add tests and install targets if needed.
