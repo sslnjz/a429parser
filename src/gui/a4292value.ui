@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>461</width>
-    <height>611</height>
+    <width>450</width>
+    <height>431</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -141,7 +141,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Label Fmt:</string>
+         <string>Format:</string>
         </property>
        </widget>
       </item>

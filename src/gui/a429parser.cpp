@@ -13,7 +13,7 @@ A429Parser::A429Parser(QWidget* parent)
    gridLayoutValue2A429->addWidget(new Value2A429(this));
    gridLayoutA4292ValueBatch->addWidget(new A4292ValueBatch(this));
 
-   tabWidget->setCurrentIndex(0);
+   //tabWidget->setCurrentIndex(0);
 }
 
 A429Parser::~A429Parser()

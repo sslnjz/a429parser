@@ -6,12 +6,11 @@
 
 int main(int argc, char* argv[])
 {
-   QApplication a(argc, argv);
+	QApplication a(argc, argv);
+	QApplication::setStyle(QStyleFactory::create("Fusion"));
 
-   a.setStyle(QStyleFactory::create("Fusion"));
+	A429Parser parser;
+	parser.show();
 
-   A429Parser parser;
-   parser.show();
-
-   return a.exec();
+	return a.exec();
 }

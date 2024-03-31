@@ -8,8 +8,8 @@ public:
    A429BitsSetModelPrivate(A429BitsSetModel* q) : q_ptr(q)
    {
       horizontalHeaders << QObject::tr("LSB") 
-                        << QObject::tr("Bits Number") 
-                        << QObject::tr("LSB Res")
+                        << QObject::tr("Bits") 
+                        << QObject::tr("Resolution")
                         << QObject::tr("Format") 
                         << QObject::tr("Value");
    }

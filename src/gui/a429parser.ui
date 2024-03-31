@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>668</height>
+    <width>450</width>
+    <height>431</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -87,30 +87,11 @@ QTabBar::tab:selected {
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="tabA4292Value">
-      <attribute name="title">
-       <string>A429 Unpack</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayoutA4292Value">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-      </layout>
-     </widget>
      <widget class="QWidget" name="tabValue2A429">
       <attribute name="title">
-       <string>A429 pack</string>
+       <string>A429 Encode</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayoutValue2A429">
        <property name="leftMargin">
@@ -127,9 +108,28 @@ QTabBar::tab:selected {
        </property>
       </layout>
      </widget>
+     <widget class="QWidget" name="tabA4292Value">
+      <attribute name="title">
+       <string>A429 Decode</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayoutA4292Value">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
+     </widget>
      <widget class="QWidget" name="tabA4292ValueBatch">
       <attribute name="title">
-       <string>A429 Unpack(Batch)</string>
+       <string>A429 Decode(Batch)</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayoutA4292ValueBatch">
        <property name="leftMargin">
